@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUpRight, Instagram } from 'lucide-react';
 
 interface FooterProps {
   onOpenConsultation: () => void;
@@ -21,7 +21,19 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation, onSelectRoom
             <p className="text-xs sm:text-sm text-stone-400 font-light leading-relaxed max-w-sm">
               Architectural home furniture and modular joinery crafted with solid timbers, tactile natural fabrics, and bespoke tolerances for residential interiors.
             </p>
-            <div className="pt-2 text-xs text-stone-400 space-y-1">
+            <div className="pt-2 text-xs text-stone-400 space-y-2">
+              <div className="flex items-center gap-2">
+                <Instagram className="w-4 h-4 text-pink-500" />
+                <a 
+                  href="https://www.instagram.com/homes.srk/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-stone-300 hover:text-white transition-colors font-medium flex items-center gap-1"
+                >
+                  <span>@homes.srk</span>
+                  <span className="text-stone-500 text-[11px] font-normal">(Follow on Instagram)</span>
+                </a>
+              </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-stone-500" />
                 <a href="mailto:marketing.srkmodular@gmail.com" className="hover:text-white transition-colors">

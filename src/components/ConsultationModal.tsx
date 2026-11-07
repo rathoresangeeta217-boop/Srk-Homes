@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, CheckCircle, Mail, Phone, MapPin, Send, Download, FileText, ClipboardList } from 'lucide-react';
+import { X, CheckCircle, Mail, Phone, MapPin, Send, Download, FileText, ClipboardList, Instagram } from 'lucide-react';
 import { Inquiry } from '../types';
 import { saveNewInquiry } from '../utils/inquiryStorage';
 
@@ -87,13 +87,16 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-stone-950/70 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 bg-stone-950/75 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden text-stone-900"
+        className="relative w-full max-w-xl max-h-[90vh] bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border-t sm:border border-stone-200 overflow-y-auto text-stone-900 pb-safe"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Mobile Drag Indicator */}
+        <div className="w-12 h-1 bg-stone-300 rounded-full mx-auto mt-3 mb-1 sm:hidden" />
+
         {/* Header */}
-        <div className="bg-[#FAF8F5] border-b border-stone-200 px-6 sm:px-8 py-5 flex items-center justify-between">
+        <div className="bg-[#FAF8F5] border-b border-stone-200 px-5 sm:px-8 py-4 sm:py-5 flex items-center justify-between">
           <div>
             <div className="text-[11px] uppercase tracking-widest text-stone-500 font-medium">
               SRK Homes Atelier
@@ -105,14 +108,14 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-stone-500 hover:text-stone-900 hover:bg-stone-200/60 rounded-full transition-colors cursor-pointer"
+            className="w-10 h-10 min-h-[40px] min-w-[40px] flex items-center justify-center text-stone-500 hover:text-stone-900 hover:bg-stone-200/60 rounded-full transition-colors cursor-pointer"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="p-6 sm:p-8">
+        <div className="p-5 sm:p-8">
           {submitted ? (
             <div className="py-8 text-center space-y-4">
               <div className="w-12 h-12 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto">
@@ -125,10 +128,22 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 Thank you, <strong className="font-semibold text-stone-900">{fullName}</strong>. An SRK Homes furniture architect has received your specifications and will respond to <span className="font-mono text-stone-800">{email}</span> within 24 business hours.
               </p>
 
-              <div className="p-4 bg-stone-50 border border-stone-200 rounded-xl max-w-md mx-auto text-xs text-stone-600 space-y-1 text-left">
+              <div className="p-4 bg-stone-50 border border-stone-200 rounded-xl max-w-md mx-auto text-xs text-stone-600 space-y-1.5 text-left">
                 <div className="text-stone-800 font-medium">Direct Atelier Desk:</div>
                 <div>Email: marketing.srkmodular@gmail.com</div>
                 <div>Phone: +91 (0) 98200 45890 / +1 (800) 480-7750</div>
+                <div className="pt-1 flex items-center gap-1.5 text-stone-800 border-t border-stone-200">
+                  <Instagram className="w-3.5 h-3.5 text-pink-600" />
+                  <span>Instagram: </span>
+                  <a 
+                    href="https://www.instagram.com/homes.srk/" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-stone-900 font-semibold underline hover:text-pink-600 transition-colors"
+                  >
+                    @homes.srk
+                  </a>
+                </div>
               </div>
 
               <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">

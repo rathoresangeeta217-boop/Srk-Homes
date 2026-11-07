@@ -66,12 +66,12 @@ export const DimensionPlanner: React.FC<DimensionPlannerProps> = ({ onOpenConsul
             <label className="block text-xs uppercase tracking-wider text-stone-500 font-medium mb-2">
               Select Room Space
             </label>
-            <div className="grid grid-cols-3 gap-2 p-1 bg-stone-100 rounded-lg">
+            <div className="grid grid-cols-3 gap-2 p-1 bg-stone-100 rounded-xl">
               <button
                 type="button"
                 onClick={() => setRoomType('living')}
-                className={`py-2 text-xs font-medium rounded-md transition-colors cursor-pointer ${
-                  roomType === 'living' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-600 hover:text-stone-900'
+                className={`min-h-[44px] py-2 text-xs font-medium rounded-lg transition-colors cursor-pointer touch-manipulation ${
+                  roomType === 'living' ? 'bg-white text-stone-900 shadow-sm font-semibold' : 'text-stone-600 hover:text-stone-900'
                 }`}
               >
                 Living Salon
@@ -79,8 +79,8 @@ export const DimensionPlanner: React.FC<DimensionPlannerProps> = ({ onOpenConsul
               <button
                 type="button"
                 onClick={() => setRoomType('dining')}
-                className={`py-2 text-xs font-medium rounded-md transition-colors cursor-pointer ${
-                  roomType === 'dining' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-600 hover:text-stone-900'
+                className={`min-h-[44px] py-2 text-xs font-medium rounded-lg transition-colors cursor-pointer touch-manipulation ${
+                  roomType === 'dining' ? 'bg-white text-stone-900 shadow-sm font-semibold' : 'text-stone-600 hover:text-stone-900'
                 }`}
               >
                 Dining Hall
@@ -88,8 +88,8 @@ export const DimensionPlanner: React.FC<DimensionPlannerProps> = ({ onOpenConsul
               <button
                 type="button"
                 onClick={() => setRoomType('bedroom')}
-                className={`py-2 text-xs font-medium rounded-md transition-colors cursor-pointer ${
-                  roomType === 'bedroom' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-600 hover:text-stone-900'
+                className={`min-h-[44px] py-2 text-xs font-medium rounded-lg transition-colors cursor-pointer touch-manipulation ${
+                  roomType === 'bedroom' ? 'bg-white text-stone-900 shadow-sm font-semibold' : 'text-stone-600 hover:text-stone-900'
                 }`}
               >
                 Master Suite
@@ -97,38 +97,74 @@ export const DimensionPlanner: React.FC<DimensionPlannerProps> = ({ onOpenConsul
             </div>
           </div>
 
-          {/* Room Width Slider */}
+          {/* Room Width Slider with Touch Stepper */}
           <div className="space-y-2">
             <div className="flex justify-between text-xs">
               <span className="text-stone-600">Room Width (Meters)</span>
               <span className="font-mono font-medium text-stone-900">{roomWidth.toFixed(1)} m ({Math.round(roomWidth * 3.28)} ft)</span>
             </div>
-            <input
-              type="range"
-              min="3.5"
-              max="9.0"
-              step="0.1"
-              value={roomWidth}
-              onChange={(e) => setRoomWidth(parseFloat(e.target.value))}
-              className="w-full accent-stone-900 cursor-pointer"
-            />
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setRoomWidth((w) => Math.max(3.5, Math.round((w - 0.2) * 10) / 10))}
+                className="w-10 h-10 min-w-[40px] rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold flex items-center justify-center active:scale-95 transition-transform cursor-pointer touch-manipulation"
+                aria-label="Decrease room width"
+              >
+                -
+              </button>
+              <input
+                type="range"
+                min="3.5"
+                max="9.0"
+                step="0.1"
+                value={roomWidth}
+                onChange={(e) => setRoomWidth(parseFloat(e.target.value))}
+                className="flex-1 accent-stone-900 cursor-pointer h-2 bg-stone-200 rounded-lg"
+              />
+              <button
+                type="button"
+                onClick={() => setRoomWidth((w) => Math.min(9.0, Math.round((w + 0.2) * 10) / 10))}
+                className="w-10 h-10 min-w-[40px] rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold flex items-center justify-center active:scale-95 transition-transform cursor-pointer touch-manipulation"
+                aria-label="Increase room width"
+              >
+                +
+              </button>
+            </div>
           </div>
 
-          {/* Room Length Slider */}
+          {/* Room Length Slider with Touch Stepper */}
           <div className="space-y-2">
             <div className="flex justify-between text-xs">
               <span className="text-stone-600">Room Length (Meters)</span>
               <span className="font-mono font-medium text-stone-900">{roomLength.toFixed(1)} m ({Math.round(roomLength * 3.28)} ft)</span>
             </div>
-            <input
-              type="range"
-              min="4.0"
-              max="11.0"
-              step="0.1"
-              value={roomLength}
-              onChange={(e) => setRoomLength(parseFloat(e.target.value))}
-              className="w-full accent-stone-900 cursor-pointer"
-            />
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setRoomLength((l) => Math.max(4.0, Math.round((l - 0.2) * 10) / 10))}
+                className="w-10 h-10 min-w-[40px] rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold flex items-center justify-center active:scale-95 transition-transform cursor-pointer touch-manipulation"
+                aria-label="Decrease room length"
+              >
+                -
+              </button>
+              <input
+                type="range"
+                min="4.0"
+                max="11.0"
+                step="0.1"
+                value={roomLength}
+                onChange={(e) => setRoomLength(parseFloat(e.target.value))}
+                className="flex-1 accent-stone-900 cursor-pointer h-2 bg-stone-200 rounded-lg"
+              />
+              <button
+                type="button"
+                onClick={() => setRoomLength((l) => Math.min(11.0, Math.round((l + 0.2) * 10) / 10))}
+                className="w-10 h-10 min-w-[40px] rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold flex items-center justify-center active:scale-95 transition-transform cursor-pointer touch-manipulation"
+                aria-label="Increase room length"
+              >
+                +
+              </button>
+            </div>
           </div>
 
           {/* Furniture Options */}

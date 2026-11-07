@@ -7,6 +7,9 @@ import { CraftsmanshipSection } from './components/CraftsmanshipSection';
 import { ProductModal } from './components/ProductModal';
 import { ConsultationModal } from './components/ConsultationModal';
 import { InquiriesDashboardModal } from './components/InquiriesDashboardModal';
+import { AdminLoginModal } from './components/AdminLoginModal';
+import { MobileBottomNav } from './components/MobileBottomNav';
+import { InstagramBanner } from './components/InstagramBanner';
 import { Footer } from './components/Footer';
 import { HERO_SUITES, FEATURED_PRODUCTS } from './data/furnitureData';
 import { FurnitureSuite, FurnitureProduct, Hotspot, Inquiry } from './types';
@@ -16,7 +19,15 @@ export default function App() {
   const [activeSuite, setActiveSuite] = useState<FurnitureSuite>(HERO_SUITES[0]);
   const [inspectItem, setInspectItem] = useState<FurnitureProduct | Hotspot | null>(null);
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem('srk_admin_auth') === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [consultationSubject, setConsultationSubject] = useState<string>('General Design Inquiry');
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
 
@@ -53,14 +64,45 @@ export default function App() {
     setInquiries(updated);
   };
 
+  // Protected Admin Portal Trigger
+  const handleOpenAdminPortal = () => {
+    if (isAdminAuthenticated) {
+      setIsDashboardOpen(true);
+    } else {
+      setIsAdminLoginOpen(true);
+    }
+  };
+
+  const handleLoginSuccess = () => {
+    setIsAdminAuthenticated(true);
+    try {
+      sessionStorage.setItem('srk_admin_auth', 'true');
+    } catch (e) {
+      console.error(e);
+    }
+    setIsAdminLoginOpen(false);
+    setIsDashboardOpen(true);
+  };
+
+  const handleLogout = () => {
+    setIsAdminAuthenticated(false);
+    try {
+      sessionStorage.removeItem('srk_admin_auth');
+    } catch (e) {
+      console.error(e);
+    }
+    setIsDashboardOpen(false);
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 font-sans selection:bg-amber-100 selection:text-amber-900">
-      {/* 3-Zone Top Navigation Bar with Inquiries Desk Button */}
+    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 font-sans selection:bg-amber-100 selection:text-amber-900 pb-20 md:pb-0">
+      {/* 3-Zone Top Navigation Bar with Admin Login Button */}
       <Header
         onOpenConsultation={handleOpenConsultation}
         onSelectRoom={handleSelectRoom}
-        onOpenDashboard={() => setIsDashboardOpen(true)}
+        onOpenDashboard={handleOpenAdminPortal}
         inquiryCount={inquiries.length}
+        isAdminAuthenticated={isAdminAuthenticated}
       />
 
       {/* Main Content Area */}
@@ -90,6 +132,9 @@ export default function App() {
         <CraftsmanshipSection
           onOpenConsultation={() => handleOpenConsultation('Material Samples & Atelier Visit')}
         />
+
+        {/* Official Instagram Community Banner */}
+        <InstagramBanner />
       </main>
 
       {/* Technical Inspection Modal */}
@@ -105,10 +150,17 @@ export default function App() {
         initialSubject={consultationSubject}
         onClose={() => setIsConsultationOpen(false)}
         onInquirySubmitted={handleInquirySubmitted}
-        onOpenDashboard={() => setIsDashboardOpen(true)}
+        onOpenDashboard={handleOpenAdminPortal}
       />
 
-      {/* Inquiries & Form Submissions Management Dashboard */}
+      {/* Admin Credentials Login Modal */}
+      <AdminLoginModal
+        isOpen={isAdminLoginOpen}
+        onClose={() => setIsAdminLoginOpen(false)}
+        onSuccess={handleLoginSuccess}
+      />
+
+      {/* Protected Inquiries & Form Submissions Management Dashboard */}
       <InquiriesDashboardModal
         isOpen={isDashboardOpen}
         inquiries={inquiries}
@@ -119,13 +171,21 @@ export default function App() {
           setIsDashboardOpen(false);
           handleOpenConsultation();
         }}
+        onLogout={handleLogout}
       />
 
-      {/* Quiet Luxury Footer with Inquiries Desk link */}
+      {/* Quiet Luxury Footer */}
       <Footer
         onOpenConsultation={() => handleOpenConsultation('General Atelier Inquiry')}
         onSelectRoom={handleSelectRoom}
-        onOpenDashboard={() => setIsDashboardOpen(true)}
+        onOpenDashboard={handleOpenAdminPortal}
+      />
+
+      {/* Ergonomic Mobile Fixed Bottom Navigation */}
+      <MobileBottomNav
+        onOpenConsultation={() => handleOpenConsultation()}
+        onOpenAdmin={handleOpenAdminPortal}
+        inquiryCount={inquiries.length}
       />
     </div>
   );

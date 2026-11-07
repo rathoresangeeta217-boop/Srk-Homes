@@ -12,7 +12,8 @@ import {
   Filter, 
   Inbox, 
   ExternalLink,
-  Plus
+  Plus,
+  LogOut
 } from 'lucide-react';
 import { Inquiry } from '../types';
 
@@ -23,6 +24,7 @@ interface InquiriesDashboardModalProps {
   onUpdateStatus: (id: string, status: Inquiry['status']) => void;
   onDeleteInquiry: (id: string) => void;
   onOpenNewConsultation: () => void;
+  onLogout?: () => void;
 }
 
 export const InquiriesDashboardModal: React.FC<InquiriesDashboardModalProps> = ({
@@ -31,7 +33,8 @@ export const InquiriesDashboardModal: React.FC<InquiriesDashboardModalProps> = (
   onClose,
   onUpdateStatus,
   onDeleteInquiry,
-  onOpenNewConsultation
+  onOpenNewConsultation,
+  onLogout
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | Inquiry['status']>('all');
@@ -120,6 +123,18 @@ export const InquiriesDashboardModal: React.FC<InquiriesDashboardModalProps> = (
               <Download className="w-3.5 h-3.5 text-stone-600" />
               <span className="hidden sm:inline">Export CSV</span>
             </button>
+
+            {onLogout && (
+              <button
+                type="button"
+                onClick={onLogout}
+                className="px-3 py-2 text-xs font-medium text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
+                title="Log out of administrator mode"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Log Out</span>
+              </button>
+            )}
 
             <button
               type="button"

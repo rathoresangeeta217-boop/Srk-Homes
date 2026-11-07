@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Lock, Instagram } from 'lucide-react';
 
 interface HeaderProps {
   onOpenConsultation: (initialSubject?: string) => void;
   onSelectRoom: (room: 'living' | 'dining' | 'bedroom') => void;
   onOpenDashboard: () => void;
   inquiryCount: number;
+  isAdminAuthenticated?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenConsultation,
   onSelectRoom,
   onOpenDashboard,
-  inquiryCount
+  inquiryCount,
+  isAdminAuthenticated = false
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -80,20 +82,35 @@ export const Header: React.FC<HeaderProps> = ({
           </a>
         </nav>
 
-        {/* Zone 3: 1 primary action + Inquiries Desk Affordance */}
-        <div className="flex items-center gap-3 shrink-0">
-          {/* Inquiries Desk Access Button */}
+        {/* Zone 3: 1 primary action + Instagram & Admin Affordances */}
+        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+          {/* Instagram Handle Link */}
+          <a
+            href="https://www.instagram.com/homes.srk/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 text-stone-700 hover:text-stone-950 hover:bg-stone-200/60 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5"
+            title="Follow SRK Homes on Instagram @homes.srk"
+            aria-label="SRK Homes Instagram @homes.srk"
+          >
+            <Instagram className="w-4 h-4 text-stone-700 hover:text-pink-600 transition-colors" />
+            <span className="hidden xl:inline text-xs font-medium text-stone-700">@homes.srk</span>
+          </a>
+
+          {/* Admin Login Button */}
           <button
             type="button"
             onClick={onOpenDashboard}
             className="flex items-center gap-2 px-3 sm:px-3.5 py-2 text-xs font-medium text-stone-800 hover:text-stone-950 bg-stone-100 hover:bg-stone-200 border border-stone-200/80 rounded-lg transition-colors cursor-pointer shadow-sm"
-            title="View all submitted consultation forms"
+            title="Administrator Login for Submitted Inquiries"
           >
-            <span className="hidden sm:inline">Inquiries Desk</span>
-            <span className="sm:hidden">Inquiries</span>
-            <span className="bg-amber-400 text-stone-950 text-[10px] font-bold px-1.5 py-0.5 rounded-full tabular-nums">
-              {inquiryCount}
-            </span>
+            <Lock className="w-3.5 h-3.5 text-stone-600" />
+            <span>Admin Login</span>
+            {inquiryCount > 0 && (
+              <span className="bg-amber-400 text-stone-950 text-[10px] font-bold px-1.5 py-0.5 rounded-full tabular-nums">
+                {inquiryCount}
+              </span>
+            )}
           </button>
 
           <button
@@ -162,13 +179,28 @@ export const Header: React.FC<HeaderProps> = ({
                 setMobileMenuOpen(false);
                 onOpenDashboard();
               }}
-              className="text-left py-2 text-amber-900 font-medium flex items-center justify-between"
+              className="text-left py-2 text-stone-900 font-medium flex items-center justify-between"
             >
-              <span>View Submitted Inquiries</span>
-              <span className="bg-amber-400 text-stone-950 text-xs font-bold px-2 py-0.5 rounded-full">
-                {inquiryCount}
+              <span className="flex items-center gap-2">
+                <Lock className="w-3.5 h-3.5 text-stone-600" />
+                <span>Admin Login</span>
               </span>
+              {inquiryCount > 0 && (
+                <span className="bg-amber-400 text-stone-950 text-xs font-bold px-2 py-0.5 rounded-full">
+                  {inquiryCount}
+                </span>
+              )}
             </button>
+
+            <a
+              href="https://www.instagram.com/homes.srk/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2 text-stone-800 font-medium flex items-center gap-2 text-sm hover:text-pink-600 transition-colors"
+            >
+              <Instagram className="w-4 h-4 text-pink-600" />
+              <span>Follow @homes.srk on Instagram</span>
+            </a>
           </div>
           <button
             type="button"

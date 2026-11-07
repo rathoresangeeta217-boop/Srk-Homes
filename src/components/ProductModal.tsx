@@ -24,16 +24,19 @@ export const ProductModal: React.FC<ProductModalProps> = ({ item, onClose, onInq
   const image = item.image || '/src/assets/images/hero_luxury_living_sofa_1794044589907.jpg';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-stone-950/70 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 bg-stone-950/75 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-stone-200 text-stone-900"
+        className="relative w-full max-w-4xl max-h-[88vh] sm:max-h-[90vh] overflow-y-auto bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border-t sm:border border-stone-200 text-stone-900 pb-safe"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Mobile Drag Indicator */}
+        <div className="w-12 h-1 bg-stone-300 rounded-full mx-auto mt-3 mb-1 sm:hidden" />
+
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 bg-stone-100/80 hover:bg-stone-200 rounded-full text-stone-700 hover:text-stone-950 transition-colors cursor-pointer"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center bg-stone-100/90 hover:bg-stone-200 rounded-full text-stone-700 hover:text-stone-950 transition-colors cursor-pointer"
           aria-label="Close details"
         >
           <X className="w-5 h-5" />
@@ -41,7 +44,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ item, onClose, onInq
 
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left: Product Image */}
-          <div className="relative aspect-square md:aspect-auto md:h-full bg-stone-100 overflow-hidden">
+          <div className="relative aspect-[4/3] sm:aspect-square md:aspect-auto md:h-full bg-stone-100 overflow-hidden">
             <img
               src={image}
               alt={'name' in item ? item.name : item.title}
