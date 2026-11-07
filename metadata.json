@@ -1,0 +1,6 @@
+{
+  "name": "SRK Homes - Luxury Bespoke Furniture",
+  "description": "Bespoke handcrafted home furniture, architectural living collections, artisan dining, and serene bedroom suites by SRK Homes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

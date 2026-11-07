@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: "Cormorant Garamond", Georgia, serif;
+    --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  }
+  
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+  }
+}
+
+.font-serif {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.font-sans {
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+
+/* Custom smooth subtle glass and shadows */
+.shadow-soft {
+  box-shadow: 0 10px 30px -10px rgba(28, 25, 23, 0.07);
+}
+
+.shadow-elevation {
+  box-shadow: 0 20px 40px -15px rgba(28, 25, 23, 0.12);
+}
+
